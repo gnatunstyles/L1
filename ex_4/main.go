@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+//функция воркера
 func worker(wg *sync.WaitGroup, id int, jobs <-chan int) {
 	defer wg.Done()
 	for i := range jobs {
@@ -21,6 +22,7 @@ func worker(wg *sync.WaitGroup, id int, jobs <-chan int) {
 
 func main() {
 	fmt.Println("Enter the number of workers:")
+	//количество воркеров
 	var num int
 	_, err := fmt.Scanln(&num)
 	if err != nil {
@@ -30,11 +32,11 @@ func main() {
 	wg.Add(num)
 
 	jobs := make(chan int, 1)
-
+	//конкурентный запуск воркеров
 	for i := 0; i < num; i++ {
 		go worker(wg, i, jobs)
 	}
-
+	//определение сигнала остановки программы
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
 
