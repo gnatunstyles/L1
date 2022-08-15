@@ -25,34 +25,24 @@ func (c *Counter) Increment() {
 	c.val++
 }
 
+//Функция конкурентного увеличения
+func (c *Counter) parallelCount(wg *sync.WaitGroup) {
+	defer wg.Done()
+	for i := 0; i < 150; i++ {
+		c.Increment()
+	}
+}
+
 func main() {
 	var wg sync.WaitGroup
 	//создание счетчика и вызов 3 параллельных горутин
 	c := NewCounter()
 
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		for i := 0; i < 150; i++ {
-			c.Increment()
-		}
-	}()
+	wg.Add(3)
 
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		for i := 0; i < 150; i++ {
-			c.Increment()
-		}
-	}()
-
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		for i := 0; i < 150; i++ {
-			c.Increment()
-		}
-	}()
+	for i := 0; i < 3; i++ {
+		go c.parallelCount(&wg)
+	}
 
 	wg.Wait()
 	fmt.Println(c.val)

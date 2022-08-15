@@ -5,7 +5,7 @@ import (
 	"sync"
 )
 
-// square - computes square of number
+// square - считает квадраты чисел
 func square(in chan int, out chan int) {
 	for val := range in {
 		square := val * val

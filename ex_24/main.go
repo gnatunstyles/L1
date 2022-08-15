@@ -5,11 +5,13 @@ import (
 	"math"
 )
 
+//структура точки
 type Point struct {
 	x float64
 	y float64
 }
 
+//конструктор структуры точки
 func New(x, y float64) *Point {
 	return &Point{
 		x: x,
@@ -17,6 +19,7 @@ func New(x, y float64) *Point {
 	}
 }
 
+//функция вычисления расстояния
 func count(fst, scd *Point) float64 {
 	return math.Sqrt(math.Pow((scd.x-fst.x), 2) + math.Pow((scd.y-fst.y), 2))
 }

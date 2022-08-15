@@ -5,6 +5,7 @@ import "fmt"
 func search(nums []int, target int) int {
 	var middle, left int
 	right := len(nums) - 1
+	//проверяем, не стоит ли искомый элемент на крайних местах массива
 	if nums[left] == target {
 		return left
 	}
@@ -12,6 +13,7 @@ func search(nums []int, target int) int {
 		return right
 	}
 
+	//ищем элемент путем постепенного разбиения массива на более мелкие части
 	for left < right-1 {
 		middle = (left + right) / 2
 		if target > nums[middle] {
@@ -21,6 +23,7 @@ func search(nums []int, target int) int {
 		}
 	}
 
+	//если элемент найден - возвращаем его, если нет -1
 	if nums[right] == target {
 		return right
 	} else {

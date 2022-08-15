@@ -40,14 +40,13 @@ func main() {
 
 	//конкурентно запускаем 3 горутины с записью данных в map
 
-	wg.Add(1)
+	wg.Add(3)
 	go func() {
 		defer wg.Done()
 		for i := 0; i < 10; i++ {
 			myMap.Load(fmt.Sprintf("%d", i), i)
 		}
 	}()
-	wg.Add(1)
 
 	go func() {
 		defer wg.Done()
@@ -55,8 +54,6 @@ func main() {
 			myMap.Load(fmt.Sprintf("%d", i), i)
 		}
 	}()
-
-	wg.Add(1)
 
 	go func() {
 		defer wg.Done()
@@ -66,6 +63,7 @@ func main() {
 	}()
 
 	wg.Wait()
+
 	//выводим результат выполнения на экран
 	fmt.Println(myMap)
 }

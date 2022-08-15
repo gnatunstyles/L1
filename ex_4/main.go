@@ -40,7 +40,9 @@ func main() {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
 
+	//запуск бесконечного цикла
 	for {
+		//оператор select
 		select {
 		case <-c:
 			close(jobs)

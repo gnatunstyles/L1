@@ -12,19 +12,25 @@ func quicksort(a []int) []int {
 
 	left, right := 0, len(a)-1
 
+	//выбор опорного элемента
 	pivot := rand.Int() % len(a)
 
-	a[pivot], a[right] = a[right], a[pivot]
+	//делаем опорный элемент на последнее место для сравнения его с элементами массива
 
-	for i, _ := range a {
+	a[pivot], a[right] = a[right], a[pivot]
+	//итерация по массиву
+	//если сравниваемый элемент меньше опорного - ставим его на место left, left итерируем
+	for i := range a {
 		if a[i] < a[right] {
 			a[left], a[i] = a[i], a[left]
 			left++
 		}
 	}
 
+	//ставим опорный элемент на место left
 	a[left], a[right] = a[right], a[left]
 
+	//рекурсивно вызываем функцию quicksort для массивов от и после опорного элемента
 	quicksort(a[:left])
 	quicksort(a[left+1:])
 
@@ -32,4 +38,5 @@ func quicksort(a []int) []int {
 }
 func main() {
 	fmt.Println(quicksort([]int{5, 6, 7, 2, 1, 0}))
+	fmt.Println(rand.Int())
 }
